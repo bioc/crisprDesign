@@ -219,6 +219,34 @@ addEditedAlleles <- function(guideSet,
     nucsReduced <- nucsReduced[names(nucsReduced) %in% colnames(ws)]
     nNucs <- length(nucsReduced)
 
+
+    .emptyEditedAlleles <- function(){
+
+        editedAlleles <- data.frame(seq=NA_character_,
+                                    score=NA_real_)
+        editedAlleles <- DataFrame(editedAlleles)
+        metadata(editedAlleles)$wildtypeAllele <- seq
+        if (strand=="+"){
+            start <- pamSite + editingWindow[1]
+            end   <- pamSite + editingWindow[2]
+        } else {
+            start <- pamSite - editingWindow[2]
+            end   <- pamSite - editingWindow[1]
+        }
+        names(start) <- names(end) <- NULL
+        metadata(editedAlleles)$start <- start
+        metadata(editedAlleles)$end <- end
+        metadata(editedAlleles)$chr <- chr
+        metadata(editedAlleles)$strand <- strand
+        metadata(editedAlleles)$editingWindow <- editingWindow
+        rownames(editedAlleles) <- rep(names(gs), nrow(editedAlleles))
+        editedAlleles <- editedAlleles[-1,]
+        return(editedAlleles)
+    }
+    
+    if (nNucs==0){
+        return(.emptyEditedAlleles())
+    }
     if (nNucs>.SPLIT_CUTOFF){
         nSegments <- ceiling(nNucs/.SPLIT_CUTOFF)
         breaks <- seq(0,nNucs, .SPLIT_CUTOFF)
@@ -340,6 +368,9 @@ addEditedAlleles <- function(guideSet,
     
     return(editedAlleles)
 }
+
+
+
 
 
 
