@@ -3,6 +3,13 @@
 \encoding{UTF-8}
 
 
+\section{Version 1.7.1}{
+\itemize{
+    \item Fixed getTssObjectFromTxObject for negative strand.
+}
+}
+
+
 \section{Version 1.5.2}{
 \itemize{
     \item Added function addReinitiationFlag. 
