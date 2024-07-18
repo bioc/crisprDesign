@@ -26,8 +26,8 @@ getTssObjectFromTxObject <- function(txObject){
     tss$ID <- paste0(tss$gene_id, "_", tss$promoter, recycle0=TRUE)
 
     # Making sure we only retain one coordinate:
-    whPos <- which(strand(tss) == "+")
-    whNeg <- which(strand(tss) == "-")
+    whPos <- which(as.character(strand(tss)) == "+")
+    whNeg <- which(as.character(strand(tss)) == "-")
     end(tss)[whPos] <- start(tss)[whPos]
     start(tss)[whNeg] <- end(tss)[whNeg]
     
